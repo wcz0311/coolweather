@@ -1,6 +1,7 @@
 package org.sjdd.coolweather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -19,6 +20,7 @@ import org.litepal.crud.DataSupport;
 import org.sjdd.coolweather.db.City;
 import org.sjdd.coolweather.db.County;
 import org.sjdd.coolweather.db.Province;
+import org.sjdd.coolweather.gson.Weather;
 import org.sjdd.coolweather.util.HttpUtil;
 import org.sjdd.coolweather.util.Utility;
 
@@ -77,6 +79,13 @@ public class ChooseAreaFragment extends Fragment {
                     case LEVEL_CITY:
                         selectedCity = cityList.get(position);
                         queryCounties();
+                        break;
+                    case LEVEL_COUNTY:
+                        String weatherId = countyList.get(position).getWeatherId();
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
                         break;
                     default:
                         break;
